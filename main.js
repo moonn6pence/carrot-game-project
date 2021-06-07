@@ -146,6 +146,7 @@ function isBugOrCarrot(event) {
     audioBugClick.play();
     return "bug";
   } else if (tag === "IMG" && value === "carrot") {
+    audioCarrotClick.currentTime = 0;
     audioCarrotClick.play();
     return "carrot";
   } else {
