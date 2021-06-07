@@ -1,0 +1,153 @@
+:root {
+  /* Color */
+  --color-black: #000;
+  --color-whte: #fff;
+  --color-yellow: #fcf283;
+  --color-pink: #fcad92;
+
+  /* Padding */
+  --padding-top: 12px;
+
+  /* Border Radius */
+  --border-radius: 16px;
+
+  /* Font Size */
+  --font-size: 28px;
+
+  /* Font Weight */
+  --weight-bold: 48px;
+  --weight-regular: 28px;
+  --weight-light: 18px;
+
+  /* Animation Duration */
+  --duration-slow: 300ms;
+  --duration-fast: 150ms;
+}
+
+* {
+  font-family: "Coming Soon", cursive;
+}
+
+button {
+  background-color: var(--color-yellow);
+  border: 5px solid black;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size);
+  line-height: 100%;
+}
+
+body {
+  background-color: var(--color-black);
+  box-sizing: border-box;
+  font-size: var(--font-size);
+}
+
+/* inGame */
+.inGame {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: url("img/background.png") center/cover no-repeat;
+  width: 1000px;
+  height: 600px;
+  margin: auto;
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+/* interface */
+.inGame__interface {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.interface__playBtn {
+  margin-top: 12px;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--border-radius);
+  transition: transform var(--duration-fast) ease-in;
+}
+
+.interface__playBtn:hover {
+  transform: scale(1.1);
+}
+
+.interface__timer {
+  border: 5px solid var(--color-black);
+  width: 150px;
+  height: 40px;
+  margin-top: 12px;
+  background-color: var(--color-whte);
+  border-radius: var(--border-radius);
+  line-height: 40px;
+}
+
+.interface__cnt {
+  background-color: var(--color-pink);
+  border: 5px solid var(--color-black);
+  border-radius: 50%;
+  margin-top: 12px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+}
+
+/* items */
+.inGame__items {
+  position: absolute;
+  top: 70px;
+  left: 30px;
+  width: 940px;
+  height: 250px;
+  margin: auto;
+  transform: translateY(250px);
+}
+
+.bug {
+  z-index: -1;
+}
+
+.carrot {
+  z-index: -2;
+}
+
+.items__img {
+  position: absolute;
+  transition: transform var(--duration-fast) ease;
+}
+
+.items__img:hover {
+  transform: scale(1.1);
+}
+
+/* endGame */
+.inGame__endGame {
+  position: absolute;
+  top: 400px;
+  left: 300px;
+  width: 400px;
+  height: 120px;
+  padding-top: 8px;
+  color: var(--color-whte);
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: var(--border-radius);
+}
+
+.endGame__replayBtn {
+  margin-bottom: 8px;
+  width: 60px;
+  height: 60px;
+  transition: transform var(--duration-fast) ease-in;
+}
+
+.endGame__replayBtn:hover {
+  transform: scale(1.1);
+}
+
+.endGame__result {
+  display: block;
+}
