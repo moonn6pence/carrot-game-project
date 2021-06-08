@@ -2,20 +2,22 @@ const playBtn = document.querySelector(".interface__playBtn");
 const playBtnImg = document.querySelector(".interface__playBtn i");
 const timer = document.querySelector(".interface__timer");
 const carrotCnt = document.querySelector(".interface__cnt");
+const stage = document.querySelector(".interface__stage");
 const endGame = document.querySelector(".inGame__endGame");
 const result = document.querySelector(".endGame__result");
 const itemBox = document.querySelector(".inGame__items");
 const replayBtn = document.querySelector(".endGame__replayBtn");
-const defaultTime = 15;
+const replayBtnImg = document.querySelector(".endGame__replayBtn i");
 const audioBugClick = new Audio("sound/bug_pull.mp3");
 const audioCarrotClick = new Audio("sound/carrot_pull.mp3");
 const audioAlert = new Audio("sound/alert.wav");
 const audioBGM = new Audio("sound/bg.mp3");
 const audioGameWin = new Audio("sound/game_win.mp3");
-let time = defaultTime;
+let curStage = 1;
+let time;
 let startGame;
 let isPlaying = false;
-let cnt;
+let cnt = curStage + 9;
 
 // show time on timer
 function showTime(num) {
@@ -28,7 +30,8 @@ function gameOn() {
   audioGameWin.pause();
   audioBGM.play();
   carrotCnt.innerText = `${cnt}`;
-  time = defaultTime;
+  stage.innerText = `Stage : ${curStage}`;
+  time = 16 - curStage;
   showTime(time);
   endGame.style.visibility = "hidden";
   playBtn.style.visibility = "visible";
@@ -44,27 +47,30 @@ function gameEnd() {
   playBtn.style.visibility = "hidden";
   isPlaying = false;
   playBtnImg.classList = "fas fa-play";
+  replayBtnImg.classList = curStage < 10 ? "fas fa-forward" : "fas fa-redo";
   showTime(time);
   clearInterval(startGame);
 }
 
 // show result
-function gameOver() {
+function gameLose() {
   gameEnd();
+  replayBtnImg.classList = "fas fa-redo";
   audioAlert.play();
   result.innerText = "YOU LOSE💩";
+  curStage = 1;
 }
 
 function gameWon() {
   gameEnd();
   audioGameWin.play();
-  result.innerText = "YOU WON🎉";
+  result.innerText = curStage < 10 ? `NEXT LEVEL : ${++curStage}` : "YOU WON🎉";
 }
 
 // timer start
 function timeOn() {
   if (time === 0) {
-    gameOver();
+    gameLose();
     return;
   }
   showTime(time--);
@@ -76,7 +82,7 @@ function onPlay() {
     gameOn();
     startGame = setInterval(timeOn, 1000);
   } else {
-    gameOver();
+    gameLose();
   }
 }
 
@@ -106,13 +112,13 @@ function makeOneItem(item) {
 
 // make one item
 function makeAllItems() {
-  for (let i = 0; i < 10; i++) {
-    if (i < 6) {
+  cnt = curStage + 9;
+  for (let i = 0; i < cnt; i++) {
+    if (i < cnt - 4) {
       makeOneItem("bug");
     }
     makeOneItem("carrot");
   }
-  cnt = 10;
 }
 
 // remove items
@@ -121,22 +127,6 @@ function removeAllItems() {
     itemBox.removeChild(itemBox.firstChild);
   }
 }
-
-// item click event
-document.addEventListener("click", (event) => {
-  const item = isBugOrCarrot(event);
-  if (isPlaying) {
-    if (item === "bug") {
-      gameOver();
-    } else if (item === "carrot") {
-      itemBox.removeChild(event.target);
-      carrotCnt.innerText = `${--cnt}`;
-      if (cnt === 0) {
-        gameWon();
-      }
-    }
-  }
-});
 
 // determine item
 function isBugOrCarrot(event) {
@@ -153,3 +143,19 @@ function isBugOrCarrot(event) {
     return false;
   }
 }
+
+// item click event
+document.addEventListener("click", (event) => {
+  const item = isBugOrCarrot(event);
+  if (isPlaying) {
+    if (item === "bug") {
+      gameLose();
+    } else if (item === "carrot") {
+      itemBox.removeChild(event.target);
+      carrotCnt.innerText = `${--cnt}`;
+      if (cnt === 0) {
+        gameWon();
+      }
+    }
+  }
+});

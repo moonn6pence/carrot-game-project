@@ -95,6 +95,12 @@ body {
   line-height: 60px;
 }
 
+.interface__stage {
+  position: absolute;
+  right: 40px;
+  top: 24px;
+}
+
 /* items */
 .inGame__items {
   position: absolute;
