@@ -147,15 +147,16 @@ function isBugOrCarrot(event) {
 // item click event
 document.addEventListener("click", (event) => {
   const item = isBugOrCarrot(event);
-  if (isPlaying) {
-    if (item === "bug") {
-      gameLose();
-    } else if (item === "carrot") {
-      itemBox.removeChild(event.target);
-      carrotCnt.innerText = `${--cnt}`;
-      if (cnt === 0) {
-        gameWon();
-      }
+  if (!isPlaying) {
+    return;
+  }
+  if (item === "bug") {
+    gameLose();
+  } else if (item === "carrot") {
+    itemBox.removeChild(event.target);
+    carrotCnt.innerText = `${--cnt}`;
+    if (cnt === 0) {
+      gameWon();
     }
   }
 });
